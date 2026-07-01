@@ -125,54 +125,12 @@ Through working with this project, I strengthened my understanding of:
 - AI-powered Nutrition Suggestions
 - Mobile Push Notifications
 - User Profile Synchronization
-## 📸 Screenshots
-
-Add application screenshots here.
-
-Example:
-
-```
-screenshots/
-├── home.png
-├── dashboard.png
-├── heatmap.png
-└── protein-food.png
-
-## ⚙️ Installation
-
-Clone the repository
-
-```bash
-git clone https://github.com/maharajcode/protein-tracker.git
-```
-
-Navigate to the project
-
-```bash
-cd protein-tracker
-```
-
-Run using a local server
-
-```bash
-npx serve .
-```
-
-or use the VS Code **Live Server** extension.
 
 ## 🤝 Contribution
 
 Contributions, suggestions, and improvements are welcome.
 
 Fork the repository and submit a Pull Request.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
 
 ## 👨‍💻 Author
 
