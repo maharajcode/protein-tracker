@@ -87,6 +87,23 @@ Supports:
 - Turkish
 - Swedish
 - Russian
+## 📸 Project Preview
+
+### 🏠 Home Page
+
+![Home Page](project-preview/home.png)
+
+---
+
+### 📊 Dashboard
+
+![Dashboard](project-preview/dashboard.png)
+
+---
+
+### 🍗 Protein Food Page
+
+![Protein Food](project-preview/protienstats)
   
 ## 📱 Progressive Web App Features
 
@@ -125,12 +142,6 @@ Through working with this project, I strengthened my understanding of:
 - AI-powered Nutrition Suggestions
 - Mobile Push Notifications
 - User Profile Synchronization
-
-## 🤝 Contribution
-
-Contributions, suggestions, and improvements are welcome.
-
-Fork the repository and submit a Pull Request.
 
 ## 👨‍💻 Author
 
