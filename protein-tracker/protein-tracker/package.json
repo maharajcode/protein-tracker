@@ -1,0 +1,20 @@
+{
+  "name": "protein-drink-tracker",
+  "version": "1.0.0",
+  "description": "A dark, supplement-label-themed Progressive Web App for tracking daily protein drink intake — streaks, badges, a 365-day heatmap, and CSV/PDF export.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "pwa",
+    "habit-tracker",
+    "protein",
+    "fitness",
+    "vanilla-js",
+    "service-worker"
+  ],
+  "author": "",
+  "license": "MIT",
+  "private": true
+}

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--
+  Protein Drink Tracker — Main Page
+  Design language: "Nutrition Facts label meets supplement-tub branding."
+  Two cards: 1) tracker-core (log today's serving)  2) dashboard (facts panel)
+  All dynamic content is rendered by app.js — this file is the static skeleton.
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12130B">
+  <title>Protein Drink Tracker</title>
+
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+
+  <script src="translations.js"></script>
+  <script>
+    (function () {
+      const saved = localStorage.getItem('proteinTheme');
+      const theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="header-left">
+      <span class="eyebrow">Daily Serving Tracker</span>
+      <h1 class="logo-text">Protein<span class="logo-dot">.</span>Log</h1>
+    </div>
+
+    <div class="header-center">
+      <div id="main-clock" class="navbar-clock" aria-label="Current Local Time" aria-live="polite" aria-atomic="true">
+        <span class="clock-time" id="clock-time">--:--</span><span class="clock-seconds" id="clock-seconds">--</span>
+      </div>
+      <div id="main-clock-label" class="navbar-location"></div>
+    </div>
+    <p id="date-text" class="date-text" aria-live="polite"></p>
+    <div class="header-right">
+      <select id="lang-select" class="lang-select" aria-label="Select Language">
+        <option value="en">🇺🇸 EN</option>
+        <option value="fr">🇫🇷 FR</option>
+        <option value="nl">🇳🇱 NL</option>
+        <option value="tr">🇹🇷 TR</option>
+        <option value="ar">🇸🇦 AR</option>
+        <option value="es">🇪🇸 ES</option>
+        <option value="sv">🇸🇪 SV</option>
+        <option value="ru">🇷🇺 RU</option>
+      </select>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">🌙</button>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+    <div class="content-wrapper">
+
+      <!-- Left card: core tracking UI -->
+      <div class="tracker-core">
+        <div id="history-log" class="history-log" aria-label="7-day history log"></div>
+
+        <p id="motivational-quote" class="motivational-quote" aria-live="polite"></p>
+
+        <div class="graphic-container" aria-hidden="true">
+          <!-- "Flexed" state: shaker full + bicep mark -->
+          <svg id="arm-flexed" class="graphic-img hidden" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="110" cy="110" r="104" fill="var(--lime-dim)"/>
+            <rect x="82" y="46" width="56" height="18" rx="5" fill="var(--ink)"/>
+            <path d="M74 64h72l8 24H66z" fill="var(--lime)"/>
+            <rect x="66" y="88" width="88" height="96" rx="16" fill="var(--paper)"/>
+            <path d="M66 118h88v50a16 16 0 0 1-16 16H82a16 16 0 0 1-16-16z" fill="var(--lime)"/>
+            <circle cx="110" cy="150" r="7" fill="var(--ink)"/>
+            <path d="M96 160l6 16h16l6-16" stroke="var(--ink)" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>
+          <!-- "Weak" state: shaker mostly empty -->
+          <svg id="arm-weak" class="graphic-img" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="110" cy="110" r="104" fill="var(--rust-dim)"/>
+            <rect x="82" y="46" width="56" height="18" rx="5" fill="var(--ink)"/>
+            <path d="M74 64h72l8 24H66z" fill="var(--text-muted)"/>
+            <rect x="66" y="88" width="88" height="96" rx="16" fill="var(--paper)"/>
+            <path d="M66 158h88v10a16 16 0 0 1-16 16H82a16 16 0 0 1-16-16z" fill="var(--rust)"/>
+            <circle cx="110" cy="150" r="7" fill="var(--ink)" opacity="0.35"/>
+          </svg>
+        </div>
+
+        <button id="protein-food-list-btn" onclick="window.location.href='protein-food.html'" class="secondary-btn">
+          List of Protein Food (Natural)
+        </button>
+
+        <div class="status-area">
+          <p id="status-text" class="status"></p>
+          <p id="streak-text" class="streak-text" aria-live="polite"></p>
+        </div>
+
+        <button type="button" id="toggle-btn" class="toggle-btn" aria-pressed="false">
+          I drank my protein
+        </button>
+
+        <p id="last-time" class="last-time"></p>
+      </div>
+
+      <!-- Right card: Nutrition-Facts-style dashboard -->
+      <div class="dashboard-container">
+        <div class="facts-label">Serving Facts</div>
+
+        <div class="badges-section" aria-label="Achievements">
+          <h3 class="section-title" id="achievements-title">Achievements</h3>
+          <div id="badges-container" class="badges-container"></div>
+        </div>
+
+        <hr class="facts-rule thick">
+
+        <div class="hero-section">
+          <div class="progress-ring-wrapper">
+            <svg class="progress-ring" viewBox="0 0 120 120" aria-label="Weekly progress">
+              <circle class="progress-ring__bg" cx="60" cy="60" r="52" />
+              <circle class="progress-ring__fill" cx="60" cy="60" r="52" id="progress-ring-fill" />
+              <text x="60" y="54" class="progress-ring__count" id="progress-ring-count" text-anchor="middle" dominant-baseline="central">0</text>
+              <text x="60" y="72" class="progress-ring__label" id="progress-ring-label" text-anchor="middle" dominant-baseline="central">/7 days</text>
+            </svg>
+          </div>
+        </div>
+
+        <div id="streak-badge" class="streak-badge hidden" aria-live="polite">
+          <span class="streak-badge__icon" id="streak-badge-icon"></span>
+          <span class="streak-badge__text" id="streak-badge-text"></span>
+        </div>
+
+        <hr class="facts-rule thin">
+
+        <button id="toggle-stats-btn" class="secondary-btn" aria-expanded="false">
+          Show Monthly Stats 📊
+        </button>
+
+        <div id="monthly-stats-section" class="collapsible-section hidden" aria-hidden="true">
+          <p id="monthly-stats-text" class="stats-text">Loading stats...</p>
+          <div class="progress-bar-container">
+            <div id="monthly-progress-fill" class="progress-fill"></div>
+          </div>
+        </div>
+
+        <hr class="facts-rule thin">
+
+        <div class="heatmap-section">
+          <h3 class="section-title" id="heatmap-title">Yearly Consistency</h3>
+          <div class="heatmap-scroll-wrapper">
+            <div id="heatmap-grid" class="heatmap-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="world-clocks" class="world-clocks footer-clocks" aria-label="World Times"></div>
+
+    <!-- Full history ledger -->
+    <div class="history-table-section">
+      <div class="history-table-header">
+        <h2 class="history-table-title" id="full-history-title">📋 Full History</h2>
+        <div class="export-btns">
+          <button class="export-btn export-csv" id="export-csv-btn" title="Download CSV">⬇ CSV</button>
+          <button class="export-btn export-pdf" id="export-pdf-btn" title="Download PDF">⬇ PDF</button>
+        </div>
+      </div>
+      <div class="history-table-wrap">
+        <table class="history-table" id="history-table">
+          <thead>
+            <tr>
+              <th id="history-th-date">Date</th>
+              <th id="history-th-day">Day</th>
+              <th id="history-th-time">Time Logged</th>
+              <th id="history-th-status">Status</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body"></tbody>
+        </table>
+        <p class="history-table-empty" id="history-table-empty">No history yet. Start tracking your protein! 💪</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

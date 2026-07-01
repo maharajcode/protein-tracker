@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12130B">
+  <title>Protein Food List - Protein.Log</title>
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="translations.js"></script>
+  <script>
+    (function () {
+      const saved = localStorage.getItem('proteinTheme');
+      const theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <style>
+    .food-page-wrap {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 55vh;
+      width: 100%;
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      padding: 1.2rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 28px var(--shadow-color);
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.8rem;
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: var(--lime-dim);
+      border-color: var(--lime);
+    }
+
+    h2#page-title {
+      text-align: center;
+      margin: 0.4rem 0 1.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .filter-container {
+      text-align: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .filter-btn {
+      background: rgba(245, 243, 231, 0.04);
+      color: var(--text-main);
+      border: 1px solid var(--glass-border);
+      padding: 0.5rem 1.1rem;
+      margin: 0.25rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.8rem;
+      font-family: var(--font-body);
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      background: var(--lime-dim);
+      border-color: var(--lime);
+    }
+
+    .filter-btn.active {
+      background: var(--lime);
+      border-color: var(--lime);
+      color: var(--ink);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="header-left">
+      <span class="eyebrow">Fuel Reference</span>
+      <h1 class="logo-text" id="sources-title">Protein Sources</h1>
+    </div>
+    <div class="header-right">
+      <select id="lang-select" class="lang-select" aria-label="Select Language">
+        <option value="en">🇺🇸 EN</option>
+        <option value="fr">🇫🇷 FR</option>
+        <option value="nl">🇳🇱 NL</option>
+        <option value="tr">🇹🇷 TR</option>
+        <option value="ar">🇸🇦 AR</option>
+        <option value="es">🇪🇸 ES</option>
+      </select>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">🌙</button>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <div class="food-page-wrap" style="text-align: center;">
+      <h2 id="page-title">Top Natural Protein Foods (per 100g)</h2>
+
+      <div class="filter-container">
+        <button class="filter-btn active" id="btn-filter-all" data-filter="all">All</button>
+        <button class="filter-btn" id="btn-filter-vegan" data-filter="vegan">Vegan</button>
+        <button class="filter-btn" id="btn-filter-vegetarian" data-filter="vegetarian">Vegetarian</button>
+        <button class="filter-btn" id="btn-filter-meat" data-filter="meat">Meat</button>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="proteinChart"></canvas>
+      </div>
+
+      <a href="index.html" class="back-btn" id="back-btn">← Back to Tracker</a>
+    </div>
+  </div>
+
+  <!--
+    Protein Food Chart Script
+    Renders a Chart.js bar chart of protein-rich foods per 100 g.
+    Supports language switching, dietary-category filtering, and
+    theme-aware colours matching the app's lime/rust palette.
+  -->
+  <script>
+    let currentLanguage = localStorage.getItem('proteinTrackerLang') || 'en';
+    let myChart = null;
+
+    const baseProteinData = [
+      { id: 'soybeans', amount: 36, category: 'vegan' },
+      { id: 'chickenBreast', amount: 31, category: 'meat' },
+      { id: 'peanutButter', amount: 25, category: 'vegan' },
+      { id: 'salmon', amount: 22, category: 'meat' },
+      { id: 'almonds', amount: 21, category: 'vegan' },
+      { id: 'paneer', amount: 18, category: 'vegetarian' },
+      { id: 'eggs', amount: 13, category: 'vegetarian' },
+      { id: 'greekYogurt', amount: 10, category: 'vegetarian' },
+      { id: 'lentils', amount: 9, category: 'vegan' }
+    ];
+
+    let currentFilteredData = [...baseProteinData];
+
+    const getColors = (dataArray) => dataArray.map((_, index) => index % 2 === 0 ? '#C6FF3D' : '#FF7A3D');
+
+    function initChart() {
+      const t = translations[currentLanguage];
+      const ctx = document.getElementById('proteinChart').getContext('2d');
+      const textColor = '#1B1C10';
+      const gridColor = 'rgba(20, 20, 10, 0.1)';
+
+      if (myChart) {
+        myChart.destroy();
+      }
+
+      myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: currentFilteredData.map(item => t.foods[item.id]),
+          datasets: [{
+            label: t.proteinLabel,
+            data: currentFilteredData.map(item => item.amount),
+            backgroundColor: getColors(currentFilteredData),
+            borderColor: '#1B1C10',
+            borderWidth: 1,
+            borderRadius: 6,
+            borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.parsed.y + 'g ' + t.proteinLabel.split(' ')[0];
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: gridColor },
+              ticks: { color: textColor, font: { family: "'IBM Plex Mono', monospace" } },
+              title: { display: true, text: t.proteinContent, color: textColor }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: textColor, font: { family: "'Work Sans', sans-serif", weight: 'bold' } }
+            }
+          }
+        }
+      });
+    }
+
+    function updatePageTranslations() {
+      if (!translations || !translations[currentLanguage]) {
+        console.error('Translations not loaded yet');
+        return;
+      }
+
+      const t = translations[currentLanguage];
+
+      document.getElementById('sources-title').textContent = t.proteinSourcesTitle;
+      document.getElementById('page-title').textContent = t.proteinFoodPageTitle;
+      document.getElementById('back-btn').textContent = t.backToTracker;
+      document.title = `${t.proteinSourcesTitle} - Protein.Log`;
+
+      if (t.filters) {
+        document.getElementById('btn-filter-all').textContent = t.filters.all;
+        document.getElementById('btn-filter-vegan').textContent = t.filters.vegan;
+        document.getElementById('btn-filter-vegetarian').textContent = t.filters.vegetarian;
+        document.getElementById('btn-filter-meat').textContent = t.filters.meat;
+      }
+
+      initChart();
+    }
+
+    function filterChart(filterType) {
+      if (filterType === 'all') {
+        currentFilteredData = baseProteinData;
+      } else if (filterType === 'vegetarian') {
+        currentFilteredData = baseProteinData.filter(item => item.category === 'vegetarian' || item.category === 'vegan');
+      } else {
+        currentFilteredData = baseProteinData.filter(item => item.category === filterType);
+      }
+      initChart();
+    }
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        const filterType = e.target.getAttribute('data-filter');
+        filterChart(filterType);
+      });
+    });
+
+    document.getElementById('lang-select').value = currentLanguage;
+    document.getElementById('lang-select').addEventListener('change', function (e) {
+      currentLanguage = e.target.value;
+      localStorage.setItem('proteinTrackerLang', currentLanguage);
+      updatePageTranslations();
+    });
+
+    const current = document.documentElement.getAttribute('data-theme');
+    document.getElementById('theme-toggle').textContent = current === 'dark' ? '🌙' : '☀️';
+
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      const current = document.documentElement.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('proteinTheme', newTheme);
+      this.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+      initChart();
+    });
+
+    updatePageTranslations();
+  </script>
+</body>
+</html>

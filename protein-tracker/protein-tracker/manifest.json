@@ -1,0 +1,17 @@
+{
+  "name": "Protein.Log — Protein Drink Tracker",
+  "short_name": "Protein.Log",
+  "description": "Track if you've drunk your protein drink today.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#12130B",
+  "background_color": "#12130B",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+/**
+ * Internationalization (i18n) Dictionary
+ *
+ * Contains UI strings for every supported language. The active language
+ * code is stored in localStorage under the LANG_KEY constant defined
+ * in app.js.
+ *
+ * Supported languages:
+ *   en - English  (default / reference)
+ *   fr - French
+ *   nl - Dutch
+ *   ar - Arabic
+ *   tr - Turkish
+ *   es - Spanish
+ *   sv - Swedish
+ *   ru - Russian
+ *
+ * How to add a new language:
+ *   1. Copy the entire "en" block as a template.
+ *   2. Add a new key using the ISO 639-1 code (e.g. "de" for German).
+ *   3. Translate every string value.
+ *   4. Add the language code to the <select id="lang-select"> in index.html.
+ *   5. (Optional) Add right-to-left handling in styles.css if needed.
+ */
+const translations = {
+  en: {
+    title: "Protein Drink Tracker",
+    proteinFoodListBtn: "List of Protein Food (Natural)",
+    btnDrank: "I drank my protein",
+    btnDrankUndo: "Undo",
+    statusDone: "Protein done for today.",
+    statusNotDone: "Not yet today.",
+    statusStreak: "day streak!",
+    localTime: "Local Time",
+    lastDrankLabel: "Last drank at",
+    progressLabel: "/7 days",
+    proteinSourcesTitle: "Protein Sources",
+    proteinFoodPageTitle: "Top Natural Protein Foods (per 100g)",
+    backToTracker: "← Back to Tracker",
+    proteinLabel: "Protein (g)",
+    proteinContent: "Protein Content (grams)",
+    foods: {
+      soybeans: "Soybeans", chickenBreast: "Chicken Breast", peanutButter: "Peanut Butter",
+      salmon: "Salmon", almonds: "Almonds", paneer: "Paneer", eggs: "Eggs",
+      greekYogurt: "Greek Yogurt", lentils: "Lentils",
+    },
+    motivationalQuotes: [
+      "Stay strong! 💪", "Consistency is key! 🔑", "One sip at a time! 🥤", "Fuel your body! ⚡",
+      "You're doing great! 🌟", "Hydrate and thrive! 💧", "Keep the streak alive! 🔥", "Protein power! 🏋️‍♂️",
+    ],
+    filters: { all: "All", vegan: "Vegan", vegetarian: "Vegetarian", meat: "Meat" },
+    achievementsTitle: "Achievements",
+    showStatsBtn: "Show Monthly Stats 📊",
+    hideStatsBtn: "Hide Monthly Stats 📊",
+    yearlyConsistencyTitle: "Yearly Consistency",
+    monthlyStatsCompleted: "{days} of {total} days completed ({percent}%)",
+    fullHistoryTitle: "📋 Full History",
+    exportCsvBtn: "⬇ CSV",
+    exportPdfBtn: "⬇ PDF",
+    historyTableDate: "DATE",
+    historyTableDay: "DAY",
+    historyEmpty: "No history yet. Start tracking your protein! 💪",
+    historyTableTimeLogged: "TIME LOGGED",
+    historyTableStatus: "STATUS",
+    alertNoHistoryExport: "No history to export yet!",
+  },
+  fr: {
+    title: "Suivi de Protéines", proteinFoodListBtn: "Liste des aliments protéinés (naturels)",
+    btnDrank: "J'ai bu ma protéine", btnDrankUndo: "Défaire",
+    statusDone: "Protéine prise aujourd'hui.", statusNotDone: "Pas encore aujourd'hui.",
+    statusStreak: "jour(s) consécutif(s)!", localTime: "Heure locale", lastDrankLabel: "Dernier bu à",
+    progressLabel: "/7 jours", proteinSourcesTitle: "Sources de Protéines",
+    proteinFoodPageTitle: "Meilleurs Aliments Naturels Riches en Protéines (par 100g)",
+    backToTracker: "← Retour au Suivi", proteinLabel: "Protéine (g)", proteinContent: "Contenu en Protéines (grammes)",
+    foods: {
+      soybeans: "Soja", chickenBreast: "Poitrine de Poulet", peanutButter: "Beurre d'Arachide",
+      salmon: "Saumon", almonds: "Amandes", paneer: "Paneer", eggs: "Œufs",
+      greekYogurt: "Yaourt Grec", lentils: "Lentilles",
+    },
+    motivationalQuotes: [
+      "Tiens bon ! 💪", "La régularité est la clé ! 🔑", "Une gorgée à la fois ! 🥤", "Nourris ton corps ! ⚡",
+      "Tu te débrouilles super bien ! 🌟", "Hydrate-toi et sois au top ! 💧", "Continue sur ta lancée ! 🔥", "La force des protéines ! 🏋️‍♂️",
+    ],
+    filters: { all: "Tous", vegan: "Végétalien", vegetarian: "Végétarien", meat: "Viande" },
+    achievementsTitle: "Réalisations", showStatsBtn: "Afficher les statistiques mensuelles 📊",
+    hideStatsBtn: "Masquer les statistiques mensuelles 📊", yearlyConsistencyTitle: "Régularité annuelle",
+    monthlyStatsCompleted: "{days} sur {total} jours terminés ({percent}%)", fullHistoryTitle: "📋 Historique complet",
+    exportCsvBtn: "⬇ CSV", exportPdfBtn: "⬇ PDF", historyTableDate: "DATE", historyTableDay: "JOUR",
+    historyEmpty: "Pas encore d'historique. Commence à suivre ta protéine ! 💪",
+    historyTableTimeLogged: "HEURE", historyTableStatus: "STATUT", alertNoHistoryExport: "Rien à exporter pour le moment !",
+  },
+  nl: {
+    title: "Eiwitdrank Tracker", proteinFoodListBtn: "Lijst met eiwitrijke voedingsmiddelen (natuurlijk)",
+    btnDrank: "Ik heb mijn eiwit gedronken", btnDrankUndo: "Ongedaan maken",
+    statusDone: "Eiwit voor vandaag gedronken.", statusNotDone: "Nog niet vandaag.",
+    statusStreak: "dag(en) op rij!", localTime: "Lokale tijd", lastDrankLabel: "Laatste gedronken om",
+    progressLabel: "/7 dagen", proteinSourcesTitle: "Eiwitbronnen",
+    proteinFoodPageTitle: "Beste Natuurlijke Eiwitrijke Voedingsmiddelen (per 100g)",
+    backToTracker: "← Terug naar Tracker", proteinLabel: "Eiwit (g)", proteinContent: "Eiwitgehalte (grammen)",
+    foods: {
+      soybeans: "Soja", chickenBreast: "Kipfilet", peanutButter: "Arachidepasta", salmon: "Zalm",
+      almonds: "Amandelen", paneer: "Paneer", eggs: "Eieren", greekYogurt: "Griekse Yoghurt", lentils: "Linzen",
+    },
+    motivationalQuotes: [
+      "Blijf sterk! 💪", "Consistentie is de sleutel! 🔑", "Eén slokje per keer! 🥤", "Geef je lichaam de brandstof! ⚡",
+      "Je doet het geweldig! 🌟", "Hydrateer en bloei! 💧", "Houd de reeks levend! 🔥", "Eiwitkracht! 🏋️‍♂️",
+    ],
+    filters: { all: "Alles", vegan: "Veganistisch", vegetarian: "Vegetarisch", meat: "Vlees" },
+    achievementsTitle: "Prestaties", showStatsBtn: "Toon maandelijkse statistieken 📊",
+    hideStatsBtn: "Verberg maandelijkse statistieken 📊", yearlyConsistencyTitle: "Jaarlijkse consistentie",
+    monthlyStatsCompleted: "{days} van {total} dagen voltooid ({percent}%)", fullHistoryTitle: "📋 Volledige geschiedenis",
+    exportCsvBtn: "⬇ CSV", exportPdfBtn: "⬇ PDF", historyTableDate: "DATUM", historyTableDay: "DAG",
+    historyEmpty: "Nog geen geschiedenis. Begin met het bijhouden van je eiwit! 💪",
+    historyTableTimeLogged: "TIJD", historyTableStatus: "STATUS", alertNoHistoryExport: "Nog niets om te exporteren!",
+  },
+  ar: {
+    title: "متعقب مشروب البروتين", proteinFoodListBtn: "قائمة الأطعمة البروتينية (الطبيعية)",
+    btnDrank: "شربت بروتيني", btnDrankUndo: "تراجع", statusDone: "تم شرب البروتين اليوم.",
+    statusNotDone: "لم يتم الشرب بعد اليوم.", statusStreak: "يوم متتالي!", localTime: "التوقيت المحلي",
+    lastDrankLabel: "آخر مشروب في", progressLabel: "/٧ أيام", proteinSourcesTitle: "مصادر البروتين",
+    proteinFoodPageTitle: "أفضل الأطعمة الطبيعية الغنية بالبروتين (لكل 100 جرام)",
+    backToTracker: "← العودة إلى المتعقب", proteinLabel: "بروتين (جرام)", proteinContent: "محتوى البروتين (بالجرام)",
+    foods: {
+      soybeans: "فول الصويا", chickenBreast: "صدر الدجاج", peanutButter: "زبدة الفول السوداني", salmon: "سلمون",
+      almonds: "اللوز", paneer: "جبن بانير", eggs: "البيض", greekYogurt: "الزبادي اليوناني", lentils: "العدس",
+    },
+    motivationalQuotes: [
+      "ابقَ قويًا! 💪", "الاستمرارية هي سر النجاح! 🔑", "رشفة تلو الأخرى! 🥤", "غذِّ جسمك! ⚡",
+      "أنت رائع! 🌟", "اشرب الماء بكثرة وازدهر! 💧", "حافظ على سلسلة انتصاراتك! 🔥", "قوة البروتين! 🏋️‍♂️",
+    ],
+    filters: { all: "الكل", vegan: "نباتي صرف", vegetarian: "نباتي", meat: "لحوم" },
+    achievementsTitle: "الإنجازات", showStatsBtn: "إظهار الإحصائيات الشهرية 📊", hideStatsBtn: "إخفاء الإحصائيات الشهرية 📊",
+    yearlyConsistencyTitle: "الاستمرارية السنوية", monthlyStatsCompleted: "تم إنجاز {days} من أصل {total} يومًا ({percent}%)",
+    fullHistoryTitle: "📋 السجل الكامل", exportCsvBtn: "⬇ CSV", exportPdfBtn: "⬇ PDF",
+    historyTableDate: "التاريخ", historyTableDay: "اليوم", historyEmpty: "لا يوجد سجل بعد. ابدأ بتتبع بروتينك! 💪",
+    historyTableTimeLogged: "الوقت", historyTableStatus: "الحالة", alertNoHistoryExport: "لا يوجد سجل للتصدير بعد!",
+  },
+  tr: {
+    title: "Proteinli İçecek Takipçisi", proteinFoodListBtn: "Protein İçeren Gıdalar Listesi (Doğal)",
+    btnDrank: "Proteinimi içtim", btnDrankUndo: "Geri al", statusDone: "Bugünkü protein içildi.",
+    statusNotDone: "Bugün henüz protein içilmedi.", statusStreak: "günlük seri!", localTime: "Yerel Saat",
+    lastDrankLabel: "En son şu tarihte içildi", progressLabel: "/7 gün", proteinSourcesTitle: "Protein Kaynakları",
+    proteinFoodPageTitle: "En İyi Doğal Protein Açısından Zengin Gıdalar (100g başına)",
+    backToTracker: "← Takipçiye Geri Dön", proteinLabel: "Protein (g)", proteinContent: "Protein İçeriği (gramlar)",
+    foods: {
+      soybeans: "Soya Fasulyesi", chickenBreast: "Tavuk Göğsü", peanutButter: "Fıstık Ezmesi", salmon: "Somon",
+      almonds: "Badem", paneer: "Paneer", eggs: "Yumurta", greekYogurt: "Yunan Yoğurdu", lentils: "Mercimek",
+    },
+    motivationalQuotes: [
+      "Güçlü kal! 💪", "Tutarlılık çok önemli! 🔑", "Bir yudumda iç! 🥤", "Vücuduna enerji ver! ⚡",
+      "Harika gidiyorsun! 🌟", "Su iç ve geliş! 💧", "Seriyi devam ettir! 🔥", "Protein gücü! 🏋️‍♂️",
+    ],
+    filters: { all: "Tümü", vegan: "Vegan", vegetarian: "Vejetaryen", meat: "Et" },
+    achievementsTitle: "Başarılar", showStatsBtn: "Aylık İstatistikleri Göster 📊", hideStatsBtn: "Aylık İstatistikleri Gizle 📊",
+    yearlyConsistencyTitle: "Yıllık Tutarlılık", monthlyStatsCompleted: "{total} günün {days} günü tamamlandı ({percent}%)",
+    fullHistoryTitle: "📋 Tüm Geçmiş", exportCsvBtn: "⬇ CSV", exportPdfBtn: "⬇ PDF",
+    historyTableDate: "TARİH", historyTableDay: "GÜN", historyEmpty: "Henüz geçmiş yok. Proteinini takip etmeye başla! 💪",
+    historyTableTimeLogged: "SAAT", historyTableStatus: "DURUM", alertNoHistoryExport: "Henüz dışa aktarılacak bir şey yok!",
+  },
+  es: {
+    title: "Registro de Bebida de Proteína", proteinFoodListBtn: "Lista de Alimentos con Proteína (Naturales)",
+    btnDrank: "Bebí mi proteína", btnDrankUndo: "Deshacer", statusDone: "Proteína completada por hoy.",
+    statusNotDone: "Aún no por hoy.", statusStreak: "¡días de racha!", localTime: "Hora Local",
+    lastDrankLabel: "Última vez que bebiste", progressLabel: "/7 días", proteinSourcesTitle: "Fuentes de Proteína",
+    proteinFoodPageTitle: "Top Alimentos Naturales con Proteína (por 100g)", backToTracker: "← Volver al Rastreador",
+    proteinLabel: "Proteína (g)", proteinContent: "Contenido de Proteína (gramos)",
+    foods: {
+      soybeans: "Soja", chickenBreast: "Pechuga de Pollo", peanutButter: "Mantequilla de Maní", salmon: "Salmón",
+      almonds: "Almendras", paneer: "Queso Paneer", eggs: "Huevos", greekYogurt: "Yogur Griego", lentils: "Lentejas",
+    },
+    motivationalQuotes: [
+      "¡Mantente fuerte! 💪", "¡La constancia es la clave! 🔑", "¡Un sorbo a la vez! 🥤", "¡Dale energía a tu cuerpo! ⚡",
+      "¡Lo estás haciendo genial! 🌟", "¡Hidrátate y progresa! 💧", "¡Mantén la racha viva! 🔥", "¡Poder de proteína! 🏋️‍♂️",
+    ],
+    filters: { all: "Todo", vegan: "Vegano", vegetarian: "Vegetariano", meat: "Carne" },
+    achievementsTitle: "Logros", showStatsBtn: "Mostrar Estadísticas Mensuales 📊", hideStatsBtn: "Ocultar Estadísticas Mensuales 📊",
+    yearlyConsistencyTitle: "Constancia Anual", monthlyStatsCompleted: "{days} de {total} días completados ({percent}%)",
+    fullHistoryTitle: "📋 Historial Completo", exportCsvBtn: "⬇ CSV", exportPdfBtn: "⬇ PDF",
+    historyTableDate: "FECHA", historyTableDay: "DÍA", historyEmpty: "Aún no hay historial. ¡Empieza a rastrear tu proteína! 💪",
+    historyTableTimeLogged: "HORA", historyTableStatus: "ESTADO", alertNoHistoryExport: "¡Nada que exportar todavía!",
+  },
+  sv: {
+    title: "Protein Dryck Spårare", proteinFoodListBtn: "Proteinriktiga matvaror (Naturliga)",
+    btnDrank: "Jag drack min protein", btnDrankUndo: "Ångra", statusDone: "Protein druckit idag.",
+    statusNotDone: "Inte druckit än idag.", statusStreak: "dagar i sträck!", localTime: "Lokal tid",
+    lastDrankLabel: "Senast drickta", progressLabel: "/7 dagar", proteinSourcesTitle: "Proteinriktiga matvaror (Naturliga)",
+    proteinFoodPageTitle: "Topp naturliga proteinriktiga matvaror (per 100g)", backToTracker: "← Tillbaka till spåraren",
+    proteinLabel: "Protein (g)", proteinContent: "Proteininnehåll (gram)",
+    foods: {
+      soybeans: "Sojabönor", chickenBreast: "Kycklingbröst", peanutButter: "Jordnötssmör", salmon: "Lax",
+      almonds: "Mandlar", paneer: "Paneer", eggs: "Ägg", greekYogurt: "Grekisk yoghurt", lentils: "Linser",
+    },
+    motivationalQuotes: [
+      "Var stark! 💪", "Kontinuitet är nyckeln! 🔑", "En klunk åt gången! 🥤", "Ge kroppen energi! ⚡",
+      "Du gör det jättebra! 🌟", "Drick vatten och väx! 💧", "Håll trenden vid liv! 🔥", "Protein pulver! 🏋️‍♂️",
+    ],
+    filters: { all: "Allt", vegan: "Vegan", vegetarian: "Vegetarian", meat: "Kött" },
+    achievementsTitle: "Prestationer", showStatsBtn: "Visa Månadsstatistik 📊", hideStatsBtn: "Göm Månadsstatistik 📊",
+    yearlyConsistencyTitle: "Årlig kontinuitet", monthlyStatsCompleted: "{days} av {total} dagar slutförda ({percent}%)",
+    fullHistoryTitle: "📋 Hela historiken", exportCsvBtn: "⬇ CSV", exportPdfBtn: "⬇ PDF",
+    historyTableDate: "DATUM", historyTableDay: "DAG", historyEmpty: "Ingen historik än. Börja spåra din protein! 💪",
+    historyTableTimeLogged: "TID LOGGAD", historyTableStatus: "STATUS", alertNoHistoryExport: "Ingen historik att exportera än!",
+  },
+  ru: {
+    title: "Трекер протеиновых напитков", proteinFoodListBtn: "Список продуктов с белком (натуральные)",
+    btnDrank: "Я выпил протеин", btnDrankUndo: "Отмена", statusDone: "Норма белка на сегодня выполнена.",
+    statusNotDone: "Норма на сегодня не выполнена.", statusStreak: "дней подряд!", localTime: "Местное время",
+    lastDrankLabel: "Последний приём", progressLabel: "/7 дней", proteinSourcesTitle: "Источники белка",
+    proteinFoodPageTitle: "Топ натуральной еды с белком (на 100 г.)", backToTracker: "← Назад к трекеру",
+    proteinLabel: "Белок (г)", proteinContent: "Содержание белка (граммы)",
+    foods: {
+      soybeans: "Соя", chickenBreast: "Куриная грудка", peanutButter: "Арахисовая паста", salmon: "Лосось",
+      almonds: "Миндаль", paneer: "Панир", eggs: "Яйца", greekYogurt: "Греческий йогурт", lentils: "Чечевица",
+    },
+    motivationalQuotes: [
+      "Держись крепко! 💪", "Постоянство - ключ! 🔑", "По глотку за раз! 🥤", "Заряди свой организм! ⚡",
+      "Молодец! 🌟", "Пей и процветай! 💧", "Не прерывай серию! 🔥", "Сила в белке! 🏋️‍♂️",
+    ],
+    filters: { all: "Все", vegan: "Веганское", vegetarian: "Вегетарианское", meat: "Мясо" },
+    achievementsTitle: "Достижения", showStatsBtn: "Показать статистику за месяц 📊", hideStatsBtn: "Скрыть статистику за месяц 📊",
+    yearlyConsistencyTitle: "Годовая стабильность", monthlyStatsCompleted: "{days} из {total} дней выполнено ({percent}%)",
+    fullHistoryTitle: "📋 Полная история", exportCsvBtn: "⬇ CSV", exportPdfBtn: "⬇ PDF",
+    historyTableDate: "ДАТА", historyTableDay: "ДЕНЬ", historyEmpty: "Истории пока нет. Начни отслеживать свой белок! 💪",
+    historyTableTimeLogged: "ВРЕМЯ ЗАПИСИ", historyTableStatus: "СТАТУС", alertNoHistoryExport: "Пока нет данных для экспорта!",
+  },
+};
